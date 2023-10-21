@@ -27,7 +27,9 @@ class _DescubrePageState extends State<DescubrePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: CustomAppBar(
+        
         title: SizedBox(
           height: 79,
           width: 307,
@@ -80,7 +82,7 @@ class _DescubrePageState extends State<DescubrePage> {
         ],
       ),
       body: Container(
-        color: darkMode ? Colors.black : Colors.white,
+        color: darkMode ? Color.fromARGB(255, 0, 0, 0) : Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -97,11 +99,18 @@ class _DescubrePageState extends State<DescubrePage> {
                     child: Text("Filtros"),
                   ),
                   // Otra imagen
-                  CustomImageView(
+                  GestureDetector(
+                    onTap: () {
+                        // Implementa la navegación a la otra vista aquí, por ejemplo:
+                          onTabMapa(context);
+                      },
+                    child: CustomImageView(
                     imagePath: ImageConstant.imgViajasmart202,
                     height: 34,
                     width: 32,
-                  ),
+                    ),
+                  )
+
                 ],
               ),
             ),
@@ -136,32 +145,7 @@ class _DescubrePageState extends State<DescubrePage> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(//finaliza el body 
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Icono de inicio (home)
-            CustomImageView(
-              imagePath: ImageConstant.imgHome,
-              height: 53,
-              width: 58,
-              margin: EdgeInsets.only(bottom: 47),
-            ),
-            // Botón con una imagen ubicado arriba
-            CustomIconButton(
-              height: 45,
-              width: 44,
-              margin: EdgeInsets.only(left: 23, top: 5, bottom: 50),
-              padding: EdgeInsets.all(5),
-              child: CustomImageView(
-                imagePath: ImageConstant.imgGroup25,
-              ),
-            ),
-          ],
-        ),
-      ),
+      //
     );
   }
 
@@ -173,6 +157,11 @@ class _DescubrePageState extends State<DescubrePage> {
   // Navegación al tocar el botón "Filtros"
   void onTapFiltros(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.descubre11Screen);
+  }
+
+  //navegacíon hacia la vista de mapas 
+  void onTabMapa(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.mapaPage);
   }
 }
 

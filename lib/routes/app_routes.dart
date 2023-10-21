@@ -33,8 +33,7 @@ class AppRoutes {
 
   static const String carritoOrgirinalScreen = '/carrito_orgirinal_screen';
 
-  static const String carritoOrgirinalTwoScreen =
-      '/carrito_orgirinal_two_screen';
+  static const String carritoOrgirinalTwoScreen ='/carrito_orgirinal_two_screen';
 
   static const String perfilDeUsuarioScreen = '/perfil_de_usuario_screen';
 
