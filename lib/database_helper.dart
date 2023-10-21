@@ -1,5 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+
+
 class DatabaseProvider {
   DatabaseProvider._();
   static final DatabaseProvider db = DatabaseProvider._();
@@ -31,7 +33,6 @@ class DatabaseProvider {
             PasswordHash TEXT NOT NULL
           );
         ''');
-        
 
         // Tabla Carrito
         await db.execute('''
@@ -155,25 +156,36 @@ class DatabaseProvider {
             FOREIGN KEY (ProductoID) REFERENCES DetallesDelCarrito (ProductoID)
           );
         ''');
-
       },
     );
     return database;
-    
   }
+
   // Método para insertar un nuevo usuario en la tabla "Usuarios".
-Future<void> insertUsuario(String nombre, String username, String email, String passwordHash) async {
-  final newDatabase = await database;
+  Future<void> insertUsuario(
+      String nombre, String username, String email, String passwordHash) async {
+    final newDatabase = await database;
 
-  final usuario = {
-    'Nombre': nombre,
-    'Username': username,
-    'Email': email,
-    'PasswordHash': passwordHash,
-  };
+    final usuario = {
+      'Nombre': nombre,
+      'Username': username,
+      'Email': email,
+      'PasswordHash': passwordHash,
+    };
 
-  await newDatabase!.insert('Usuarios', usuario);
-}
+    await newDatabase!.insert('Usuarios', usuario);
+    await insertUsuario('predro', 'pedro', 'pedrito22@gmail.com', 'Pfernan22_');
 
+  }
 
+  Future<bool?> checkUser(String email, String password) async {
+    final db = await database;
+    final result = await db?.query(
+      'users',
+      where: 'email = ? AND password = ?',
+      whereArgs: [email, password],
+    );
+    return result?.isNotEmpty; // Devuelve true si el usuario existe
+
+  }
 }

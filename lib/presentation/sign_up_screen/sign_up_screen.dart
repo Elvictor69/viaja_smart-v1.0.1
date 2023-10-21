@@ -144,7 +144,7 @@ class SignUpScreen extends StatelessWidget {
                                 ),
                                 CustomTextFormField(
                                   controller: edittextController,
-                                  margin: EdgeInsets.only(left: 22.h, right: 21.h),
+                                  margin: EdgeInsets.only(left: 22.h, right: 21.h), onChanged: (text) {  },
                                 ),
                                 Align(
                                   alignment: Alignment.centerLeft,
@@ -159,10 +159,7 @@ class SignUpScreen extends StatelessWidget {
                                 ),
                                 CustomTextFormField(
                                   controller: edittextoneController,
-                                  margin: EdgeInsets.only(left: 22.h, right: 21.h),
-                                  onChanged: (text) {
-                                    checkFields();
-                                  },
+                                  margin: EdgeInsets.only(left: 22.h, right: 21.h), onChanged: (text) {  },
                                 ),
                                 Align(
                                   alignment: Alignment.centerLeft,
@@ -179,7 +176,7 @@ class SignUpScreen extends StatelessWidget {
                                   controller: edittexttwoController,
                                   margin: EdgeInsets.only(left: 22.h, right: 21.h),
                                   textInputAction: TextInputAction.done,
-                                  obscureText: true,
+                                  obscureText: true, onChanged: (text) {  },
                                 ),
                                 SizedBox(height: 28.v),
                                 CustomElevatedButton(

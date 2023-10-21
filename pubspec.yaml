@@ -10,7 +10,7 @@ dependencies:
   flutter_svg: ^1.1.6
   outline_gradient_button: ^2.0.0+1
   intl: ^0.18.0
-  sqflite: ^2.0.0  # Agregamos la dependencia de sqflite aquí
+  sqflite: ^2.3.0  # Agregamos la dependencia de sqflite aquí
 dev_dependencies:
   flutter_test:
     sdk: flutter
