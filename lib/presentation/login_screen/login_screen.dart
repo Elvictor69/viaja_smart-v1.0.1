@@ -403,7 +403,6 @@ class LoginScreen extends StatelessWidget {
 
     // Lógica para verificar las credenciales y navegar a la siguiente pantalla
     if (checkUserCredentials(email, password)) {
-      Navigator.pushNamed(context, '/siguiente_pantalla');
       onTapFinish(context);
     } else {
       // Mostrar un mensaje de error, por ejemplo, con un diálogo

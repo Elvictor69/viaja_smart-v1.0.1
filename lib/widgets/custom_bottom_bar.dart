@@ -4,7 +4,7 @@ import 'package:viaja_smart/core/app_export.dart';
 class CustomBottomBar extends StatefulWidget {
   CustomBottomBar({this.onChanged});
 
-  Function(BottomBarEnum)? onChanged;
+  final Function(BottomBarEnum)? onChanged;
 
   @override
   CustomBottomBarState createState() => CustomBottomBarState();
@@ -13,7 +13,7 @@ class CustomBottomBar extends StatefulWidget {
 class CustomBottomBarState extends State<CustomBottomBar> {
   int selectedIndex = 0;
 
-  List<BottomMenuModel> bottomMenuList = [
+  final List<BottomMenuModel> bottomMenuList = [
     BottomMenuModel(
       icon: ImageConstant.imgImage11,
       activeIcon: ImageConstant.imgImage11,
@@ -39,15 +39,12 @@ class CustomBottomBarState extends State<CustomBottomBar> {
             color: appTheme.black900.withOpacity(0.25),
             spreadRadius: 2.h,
             blurRadius: 2.h,
-            offset: Offset(
-              0,
-              4,
-            ),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
         showSelectedLabels: false,
         showUnselectedLabels: false,
         selectedFontSize: 0,
@@ -102,13 +99,10 @@ class BottomMenuModel {
     this.isPng = false,
   });
 
-  String icon;
-
-  String activeIcon;
-
-  BottomBarEnum type;
-
-  bool isPng;
+  final String icon;
+  final String activeIcon;
+  final BottomBarEnum type;
+  final bool isPng;
 }
 
 class DefaultWidget extends StatelessWidget {
@@ -116,7 +110,7 @@ class DefaultWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
