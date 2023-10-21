@@ -8,8 +8,21 @@ import 'package:viaja_smart/widgets/custom_elevated_button.dart';
 import 'package:viaja_smart/widgets/custom_icon_button.dart';
 import '../descubre_page/widgets/visitcathedral_item_widget.dart';
 
-class DescubrePage extends StatelessWidget {
+class DescubrePage extends StatefulWidget {
   const DescubrePage({Key? key}) : super(key: key);
+
+  @override
+  _DescubrePageState createState() => _DescubrePageState();
+}
+
+class _DescubrePageState extends State<DescubrePage> {
+  bool darkMode = false;
+
+  void toggleDarkMode() {
+    setState(() {
+      darkMode = !darkMode;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,96 +57,110 @@ class DescubrePage extends StatelessWidget {
                 imagePath: ImageConstant.imgViajasmart2mesa,
                 margin: EdgeInsets.fromLTRB(10, 20, 200, 9),
               ),
+              // Botón para cambiar el modo claro/oscuro
+              Positioned(
+                top: 30,
+                right: 10,
+                child: IconButton(
+                  onPressed: toggleDarkMode,
+                  icon: Icon(
+                    darkMode ? Icons.wb_sunny : Icons.nightlight_round,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
         actions: [
-          // imagen en la barra de navegación
+          // Imagen en la barra de navegación
           AppbarImage1(
             imagePath: ImageConstant.imgImage14,
             margin: EdgeInsets.fromLTRB(21, 23, 15, 20),
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 18, top: 5, right: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Botón de "Filtros" con icono a la derecha
-                ElevatedButton(
-                  onPressed: () {
-                    onTapFiltros(context);
-                  },
-                  child: Text("Filtros"),
-                ),
-                // Otra imagen
-                CustomImageView(
-                  imagePath: ImageConstant.imgViajasmart202,
-                  height: 34,
-                  width: 32,
-                ),
-              ],
+      body: Container(
+        color: darkMode ? Colors.black : Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 18, top: 5, right: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Botón de "Filtros" con icono a la derecha
+                  ElevatedButton(
+                    onPressed: () {
+                      onTapFiltros(context);
+                    },
+                    child: Text("Filtros"),
+                  ),
+                  // Otra imagen
+                  CustomImageView(
+                    imagePath: ImageConstant.imgViajasmart202,
+                    height: 34,
+                    width: 32,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: 16,
-                  top: 8,
-                  right: 20,
-                  bottom: 2,
-                ),
-                child: ListView.separated(
-                  physics: BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 19);
-                  },
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return VisitcathedralItemWidget(
-                      onTapImgImageClass: () {
-                        onTapImgImageClass(context);
-                      },
-                    );
-                  },
+            Expanded(
+              child: Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 16,
+                    top: 8,
+                    right: 20,
+                    bottom: 2,
+                  ),
+                  child: ListView.separated(
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) {
+                      return SizedBox(height: 19);
+                    },
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      return VisitcathedralItemWidget(
+                        onTapImgImageClass: () {
+                          onTapImgImageClass(context);
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 31),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Icono de inicio (home)
-                CustomImageView(
-                  imagePath: ImageConstant.imgHome,
-                  height: 53,
-                  width: 58,
-                  margin: EdgeInsets.only(bottom: 47),
-                ),
-                // Botón con una imagen ubicado arriba
-                CustomIconButton(
-                  height: 45,
-                  width: 44,
-                  margin: EdgeInsets.only(left: 23, top: 5, bottom: 50),
-                  padding: EdgeInsets.all(5),
-                  child: CustomImageView(
-                    imagePath: ImageConstant.imgGroup25,
-                  ),
-                ),
-              ],
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(//finaliza el body 
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Icono de inicio (home)
+            CustomImageView(
+              imagePath: ImageConstant.imgHome,
+              height: 53,
+              width: 58,
+              margin: EdgeInsets.only(bottom: 47),
             ),
-          ),
-        ],
+            // Botón con una imagen ubicado arriba
+            CustomIconButton(
+              height: 45,
+              width: 44,
+              margin: EdgeInsets.only(left: 23, top: 5, bottom: 50),
+              padding: EdgeInsets.all(5),
+              child: CustomImageView(
+                imagePath: ImageConstant.imgGroup25,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -147,4 +174,10 @@ class DescubrePage extends StatelessWidget {
   void onTapFiltros(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.descubre11Screen);
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: DescubrePage(),
+  ));
 }

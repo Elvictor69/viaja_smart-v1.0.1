@@ -26,74 +26,74 @@ class DatabaseProvider {
         // Tabla Usuarios
         await db.execute('''
           CREATE TABLE Usuarios (
-            UserID INTEGER PRIMARY KEY AUTOINCREMENT,
-            Nombre TEXT NOT NULL,
-            Username TEXT NOT NULL,
-            Email TEXT NOT NULL,
-            PasswordHash TEXT NOT NULL
+            userID INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            username TEXT NOT NULL,
+            email TEXT NOT NULL,
+            password TEXT NOT NULL
           );
         ''');
 
         // Tabla Carrito
         await db.execute('''
           CREATE TABLE Carrito (
-            CarritoID INTEGER PRIMARY KEY,
-            UserID INTEGER,
-            FOREIGN KEY (UserID) REFERENCES Usuarios (UserID)
+            carritoID INTEGER PRIMARY KEY,
+            userID INTEGER,
+            FOREIGN KEY (userID) REFERENCES Usuarios (userID)
           );
         ''');
 
         // Tabla Empresas
         await db.execute('''
           CREATE TABLE Empresas (
-            EmpresaID INTEGER PRIMARY KEY AUTOINCREMENT,
+            empresaID INTEGER PRIMARY KEY AUTOINCREMENT,
             NombreEmpresa TEXT NOT NULL,
-            Direccion TEXT,
-            ContactoNombre TEXT,
-            ContactoEmail TEXT NOT NULL,
-            Cuenta CHAR(25) NOT NULL
+            direccion TEXT,
+            contactoNombre TEXT,
+            contactoEmail TEXT NOT NULL,
+            cuenta CHAR(25) NOT NULL
           );
         ''');
 
         // Tabla ProductosServicios
         await db.execute('''
           CREATE TABLE ProductosServicios (
-            ProductoID INTEGER PRIMARY KEY AUTOINCREMENT,
+            productoID INTEGER PRIMARY KEY AUTOINCREMENT,
             NombreProductoServicio TEXT NOT NULL,
-            Etiqueta TEXT,
-            Descripcion TEXT,
-            Precio REAL NOT NULL,
-            EmpresaID INTEGER,
-            FOREIGN KEY (EmpresaID) REFERENCES Empresas (EmpresaID)
+            etiqueta TEXT,
+            descripcion TEXT,
+            precio REAL NOT NULL,
+            empresaID INTEGER,
+            FOREIGN KEY (empresaID) REFERENCES Empresas (empresaID)
           );
         ''');
 
         // Tabla DetallesDelCarrito
         await db.execute('''
           CREATE TABLE DetallesDelCarrito (
-            DetalleID INTEGER PRIMARY KEY,
-            CarritoID INTEGER,
-            ProductoID INTEGER,
-            Cantidad INTEGER,
-            FOREIGN KEY (CarritoID) REFERENCES Carrito (CarritoID),
-            FOREIGN KEY (ProductoID) REFERENCES ProductosServicios (ProductoID)
+            detalleID INTEGER PRIMARY KEY,
+            carritoID INTEGER,
+            productoID INTEGER,
+            cantidad INTEGER,
+            FOREIGN KEY (carritoID) REFERENCES Carrito (carritoID),
+            FOREIGN KEY (productoID) REFERENCES ProductosServicios (productoID)
           );
         ''');
 
         // Tabla Compras
         await db.execute('''
           CREATE TABLE Compras (
-            CompraID INTEGER PRIMARY KEY AUTOINCREMENT,
-            UsuarioID INTEGER,
-            CarritoID INTEGER,
-            EmpresaID INTEGER,
-            ProductoID INTEGER,
+            compraID INTEGER PRIMARY KEY AUTOINCREMENT,
+            usuarioID INTEGER,
+            carritoID INTEGER,
+            empresaID INTEGER,
+            productoID INTEGER,
             FechaCompra DATE,
-            MontoTotal REAL NOT NULL,
-            FOREIGN KEY (UsuarioID) REFERENCES Usuarios (UserID),
-            FOREIGN KEY (CarritoID) REFERENCES Carrito (CarritoID),
-            FOREIGN KEY (EmpresaID) REFERENCES ProductosServicios (EmpresaID),
-            FOREIGN KEY (ProductoID) REFERENCES DetallesDelCarrito (ProductoID)
+            montoTotal REAL NOT NULL,
+            FOREIGN KEY (usuarioID) REFERENCES usuarios (userID),
+            FOREIGN KEY (carritoID) REFERENCES carrito (carritoID),
+            FOREIGN KEY (empresaID) REFERENCES ProductosServicios (empresaID),
+            FOREIGN KEY (productoID) REFERENCES DetallesDelCarrito (productoID)
           );
         ''');
 
@@ -101,10 +101,10 @@ class DatabaseProvider {
         await db.execute('''
           CREATE TABLE ImagenesEmpresa (
             ImagenID INTEGER PRIMARY KEY AUTOINCREMENT,
-            EmpresaID INTEGER NOT NULL,
+            empresaID INTEGER NOT NULL,
             NombreArchivo TEXT,
             DatosImagen BLOB,
-            FOREIGN KEY (EmpresaID) REFERENCES Empresas (EmpresaID)
+            FOREIGN KEY (empresaID) REFERENCES Empresas (empresaID)
           );
         ''');
 
@@ -123,10 +123,10 @@ class DatabaseProvider {
         await db.execute('''
           CREATE TABLE ImagenesUsuarios (
             ImagenID INTEGER PRIMARY KEY AUTOINCREMENT,
-            UserID INTEGER NOT NULL,
+            userID INTEGER NOT NULL,
             NombreArchivo TEXT,
             DatosImagen BLOB,
-            FOREIGN KEY (UserID) REFERENCES Usuarios (UserID)
+            FOREIGN KEY (userID) REFERENCES Usuarios (userID)
           );
         ''');
 
@@ -146,14 +146,14 @@ class DatabaseProvider {
         await db.execute('''
           CREATE TABLE pedidos (
             PedidoID INTEGER PRIMARY KEY AUTOINCREMENT,
-            EmpresaID INTEGER,
-            UserID INTEGER,
+            empresaID INTEGER,
+            userID INTEGER,
             PagoID INTEGER,
-            ProductoID INTEGER,
-            FOREIGN KEY (EmpresaID) REFERENCES Empresas (EmpresaID),
-            FOREIGN KEY (UserID) REFERENCES Usuarios (UserID),
-            FOREIGN KEY (PagoID) REFERENCES Compras (CompraID),
-            FOREIGN KEY (ProductoID) REFERENCES DetallesDelCarrito (ProductoID)
+            productoID INTEGER,
+            FOREIGN KEY (empresaID) REFERENCES Empresas (empresaID),
+            FOREIGN KEY (userID) REFERENCES Usuarios (userID),
+            FOREIGN KEY (pagoID) REFERENCES Compras (compraID),
+            FOREIGN KEY (productoID) REFERENCES DetallesDelCarrito (productoID)
           );
         ''');
       },
@@ -167,21 +167,21 @@ class DatabaseProvider {
     final newDatabase = await database;
 
     final usuario = {
-      'Nombre': nombre,
-      'Username': username,
-      'Email': email,
-      'PasswordHash': passwordHash,
+      'nombre': nombre,
+      'username': username,
+      'email': email,
+      'password': passwordHash,
     };
 
     await newDatabase!.insert('Usuarios', usuario);
-    await insertUsuario('predro', 'pedro', 'pedrito22@gmail.com', 'Pfernan22_');
+    await insertUsuario('predro', 'pedro', '@gmail.com', '12345678');
 
   }
 
   Future<bool?> checkUser(String email, String password) async {
     final db = await database;
     final result = await db?.query(
-      'users',
+      'Usuarios',
       where: 'email = ? AND password = ?',
       whereArgs: [email, password],
     );
