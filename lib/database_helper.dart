@@ -159,5 +159,21 @@ class DatabaseProvider {
       },
     );
     return database;
+    
   }
+  // Método para insertar un nuevo usuario en la tabla "Usuarios".
+Future<void> insertUsuario(String nombre, String username, String email, String passwordHash) async {
+  final newDatabase = await database;
+
+  final usuario = {
+    'Nombre': nombre,
+    'Username': username,
+    'Email': email,
+    'PasswordHash': passwordHash,
+  };
+
+  await newDatabase!.insert('Usuarios', usuario);
+}
+
+
 }

@@ -3,6 +3,9 @@ import 'package:outline_gradient_button/outline_gradient_button.dart';
 import 'package:viaja_smart/core/app_export.dart';
 import 'package:viaja_smart/widgets/custom_elevated_button.dart';
 import 'package:viaja_smart/widgets/custom_text_form_field.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+
 
 // ignore_for_file: must_be_immutable
 class LoginScreen extends StatelessWidget {
@@ -315,7 +318,10 @@ class LoginScreen extends StatelessWidget {
                                                                               .ellipsis,
                                                                           style: theme
                                                                               .textTheme
-                                                                              .bodyMedium))),
+                                                                              .bodyMedium
+                                                                            )
+                                                                        )
+                                                                    ),
                                                             
                                                               Align(
                                                                   alignment:
